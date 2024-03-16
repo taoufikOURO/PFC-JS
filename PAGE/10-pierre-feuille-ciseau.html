@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pierre feuille cisceau</title>
+    <style>
+        body {
+            background-color: rgb(25, 25, 25);
+            color: white;
+            font-family: arial;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .title {
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        .move-btn {
+            background-color: transparent;
+            border: 2px solid white;
+            border-radius: 50%;
+            padding: 30px;
+            cursor: pointer;
+            margin-right: 30px;
+        }
+
+        .result {
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .score {
+            margin-top: 50px;
+        }
+
+        .reset-score-btn {
+            background-color: white;
+            border: none;
+            font-size: 15px;
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+
+        <p class="title">Pierre feuille ciseau</p>
+        <button onclick="
+        computerMove = pickComputerMove();
+        var result = '';
+        if(computerMove === 'Pierre'){
+            result = 'Match nul';
+            score.ties++;
+        }else if(computerMove === 'Feuille'){
+            result = 'Tu as perdu'
+            score.losses++;
+        }else if(computerMove === 'Ciseau'){
+            result = 'Tu as gagner';
+            score.wins++;
+        }
+        scoreText();
+        resultMatch(result);
+        moves(computerMove,'Pierre');
+
+    " class="move-btn">
+            <img src="../IMG/pierre.png" alt="" width="100px">
+        </button>
+
+
+        <button onclick="
+        computerMove = pickComputerMove();
+        var result = '';
+        if(computerMove === 'Pierre'){
+            result = 'Tu as gagner';
+            score.wins++;
+        }else if(computerMove === 'Feuille'){
+            result = 'Match nul'
+            score.ties++;
+        }else if(computerMove === 'Ciseau'){
+            result = 'Tu as perdu';
+            score.losses++;
+        }
+        scoreText();
+        resultMatch(result);
+        moves(computerMove,'Feuille');
+    " class="move-btn">
+            <img src="../IMG/feuille.png" alt="" width="100px">
+        </button>
+
+
+        <button onclick="
+       computerMove = pickComputerMove();
+        var result = '';
+
+        if(computerMove === 'Pierre'){
+            result = 'Tu as perdu';
+            score.losses++;
+        }else if(computerMove === 'Feuille'){
+            result = 'Tu as gagner'
+            score.wins++;
+        }else if(computerMove === 'Ciseau'){
+            result = 'Match nul';
+            score.ties++;
+        }
+        scoreText();
+        resultMatch(result);
+        moves(computerMove,'Ciseau');
+
+    " class="move-btn">
+            <img src="../IMG/ciseau.png" alt="" width="100px" height="100px">
+        </button>
+
+        <p class="js-result result">Match nul</p>
+        <p class="js-moves">
+
+        </p>
+
+        <p class="js-score score">Match remportés: 0 , Match perdus: 0 , Match Nuls: 0</p>
+
+        <button onclick="
+        if(confirm('Voullez vous vraiment Reinitialiser votre score?')){
+            score.losses = 0;
+            score.ties = 0;
+            score.wins = 0;
+            alert('Le score a été réinitialisé');
+            scoreText();
+        }else{
+            alert('Réinitialisation annulée');
+        }
+    " class="reset-score-btn">Reinitialiser le score</button>
+    </div>
+
+    <script>
+        const score = {
+            wins: 0,
+            losses: 0,
+            ties: 0
+        };
+
+        let computerMove = '';
+        var pickComputerMove = () => {
+            var randomNumber = Math.random();
+            if (randomNumber >= 0 && randomNumber < 1 / 3) {
+                computerMove = 'Pierre';
+            } else if (randomNumber >= 1 / 3 && randomNumber < 2 / 3) {
+                computerMove = 'Feuille';
+            } else if (randomNumber >= 2 / 3 && randomNumber < 1) {
+                computerMove = 'Ciseau';
+            }
+            return computerMove;
+        };
+        scoreText = () => {
+            document.querySelector('.js-score').innerHTML = ` Match remportés: ${score.wins}, Match perdus: ${score.losses}, Match Nuls: ${score.ties}`;
+        }
+        resultMatch = (resultat) => {
+            document.querySelector('.js-result').innerHTML = resultat;
+        }
+        moves = (computerMove, userSelect) => {
+            document.querySelector('.js-moves').innerHTML = `Toi <img src='../IMG/${userSelect}.png' width='70px'>
+        <img src='../IMG/${computerMove}.png' width='70px'>Ordinateur`;
+        };
+    </script>
+</body>
+
+</html>
